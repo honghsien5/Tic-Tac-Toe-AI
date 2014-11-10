@@ -8,7 +8,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TicTacToe class which implement required maneuverbility for minimax algorithm
 class TicTacToe {
 	String board;
 	int size ;
@@ -31,6 +31,7 @@ class TicTacToe {
 			player = size%2;
 		}
 	}
+    //verify the format of a string
 	boolean checkStr(String str){
 		if(str.length()==9){
 			for(int i=0; i < 9;i++){
@@ -47,12 +48,14 @@ class TicTacToe {
 			return false;
 		}
 	}
+    //singleton methods
 	String getBoard(){
 		return board;
 	}
 	int getPlayer(){
 		return player;
 	}
+    //count the current size of the board
 	int countSize(String str){
 		int count =0;
 		for(int i = 0 ; i < str.length();i++){
@@ -62,6 +65,7 @@ class TicTacToe {
 		}
 		return 9-count;
 	}
+    //read in a string and populate the board represented by the string
 	void read(String str){
 		if(!checkStr(str)){
 			System.out.println(str +": string is in the incorrent format.");
@@ -71,12 +75,13 @@ class TicTacToe {
 			player = size%2;
 		}
 	}
-	
+	//print out the board in the tictactoe format
 	void print(){
 		for(int i = 0 ; i < 9;i+=3){
 			System.out.println(board.substring(i,i+3));
 		}
 	}
+    //return the string representation of the board with the new move
 	String move(int n){
 		if(player == 0 ){
 			return board.substring(0,n) + "X" + board.substring(n+1);
@@ -84,13 +89,16 @@ class TicTacToe {
 			return board.substring(0,n) + "O" + board.substring(n+1);
 		}
 	}
+    //return a new game instance with the new move
 	TicTacToe newMove(int n){
 		if(player == 0 ){
 			return new TicTacToe(board.substring(0,n) + "X" + board.substring(n+1));
 		}else{
 			return new TicTacToe(board.substring(0,n) + "O" + board.substring(n+1));
-		}
+		
+        }
 	}
+    //return a list of all available moves
 	List<Integer> availableMoves(){
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0 ; i < board.length();i++){
@@ -100,6 +108,7 @@ class TicTacToe {
 		}
 		return list;
 	}
+    //return 0 for X's win, 1 for O's win, 2 for Tie, 3 for not ended
 	int gameEnd(){
 		int[] count = new int[16];
 		//horizontal check
@@ -164,6 +173,7 @@ class TicTacToe {
 
 
 public class TicTacToeAI {
+    //return the score of the current game
 	static int score(TicTacToe game){
 		if(game.gameEnd() ==0){
 			return 1;
@@ -174,6 +184,7 @@ public class TicTacToeAI {
 		}
 		
 	}
+    //return the minimum number of the list
 	static int minScore(List<Integer> list){
 		int min = list.get(0);
 		for(int n : list){
@@ -183,6 +194,7 @@ public class TicTacToeAI {
 		}
 		return min;
 	}
+    //return the minimum number of the list
 	static int maxScore(List<Integer> list){
 		int max = list.get(0);
 		for(int n : list){
@@ -194,12 +206,14 @@ public class TicTacToeAI {
 	}
 	
 	static int count;
+    //encapsulation of the minimax method and display the result
 	static void minimax(TicTacToe game){
 		count = 0;
 		System.out.println("Game Result:" +minimaxHelper(game));
 		System.out.println("Moves considered without alpha-beta pruning: "+count);
 		
 	}
+    //minimax method which increment the count and calculate the winner of the game
 	static int minimaxHelper(TicTacToe game){
 		int winner = game.gameEnd();
 		if(winner !=3){
@@ -220,6 +234,7 @@ public class TicTacToeAI {
 	}
 	static int alphaCount;
 	static int betaCount;
+    //encapsulation method for the minimax with alpha beta pruning
 	static void minimaxAlphaBeta(TicTacToe game){
 		count=0;
 		alphaCount=0;
@@ -229,6 +244,7 @@ public class TicTacToeAI {
 		System.out.println("Alpha cuts: " + alphaCount);
 		System.out.println("Beta cuts: " + betaCount);
 	}
+    //minimax with alpha beta pruning implemented to optimize the speed of the algorithm
 	static int minimaxAlphaBeta(TicTacToe game, int alpha, int beta){
 		int winner = game.gameEnd();
 		if(winner !=3){
