@@ -1,4 +1,10 @@
-
+/**
+ Name: TicTacToeAI.java
+ Description: TicTacToe game implementation to demonstrate minimax and alpha beta pruning algorithms
+ Author: Shien Hong
+ Date: Nov 10 2014
+ 
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +35,12 @@ class TicTacToe {
 		if(str.length()==9){
 			for(int i=0; i < 9;i++){
 				char temp = str.charAt(i);
-				if(temp != '_' || temp != 'X' || temp !='O'){
+				if(temp == '_' || temp == 'X' || temp =='O'){
+					
+				}else{
 					return false;
 				}
+				
 			}
 			return true;
 		}else{
@@ -262,7 +271,8 @@ public class TicTacToeAI {
 	
 	public static void main(String[] args){
 		TicTacToe game = new TicTacToe(args[0]);
-		game.print();
+        System.out.println("Initial board:");
+        game.print();
 		System.out.println();
 		minimax(game);
 		System.out.println();
